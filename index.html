@@ -364,6 +364,36 @@ h2 {
   color: var(--crema-suave);
 }
 
+/* ============ PILLS DE "GOOD TO KNOW" ============ */
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+.pill {
+  border: 1px solid var(--linea);
+  background: var(--fondo-2);
+  color: var(--crema-suave);
+  padding: 9px 20px;
+  border-radius: 50px;
+  font-size: .88rem;
+  transition: border-color .25s ease, color .25s ease;
+}
+.pill:hover { border-color: rgba(211,169,76,.55); color: var(--crema); }
+/* Estrella "parcial" para una nota de 4.8: dorada al 96% y el resto apagada */
+.estrellas .estrella-parcial.encendida {
+  opacity: 1;
+  transform: scale(1.15);
+  background: linear-gradient(90deg, var(--dorado) 96%, #3a322b 96%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+}
+
 /* ============ MENÚ ESTILO TRATTORIA ============ */
 .lista-menu { max-width: 760px; margin: 0 auto; }
 .plato {
@@ -634,6 +664,7 @@ footer small { color: #6e6257; display: block; margin-top: 8px; }
       <li><a href="#about" data-en="About" data-it="Chi siamo">About</a></li>
       <li><a href="#menu" data-en="Menu" data-it="Menù">Menu</a></li>
       <li><a href="#reviews" data-en="Reviews" data-it="Recensioni">Reviews</a></li>
+      <li><a href="#info" data-en="Good to know" data-it="Info utili">Good to know</a></li>
       <li><a href="#hours" data-en="Hours" data-it="Orari">Hours</a></li>
       <li><a href="#location" data-en="Location" data-it="Dove siamo">Location</a></li>
       <li><a href="#contact" data-en="Contact" data-it="Contatti">Contact</a></li>
@@ -745,9 +776,9 @@ footer small { color: #6e6257; display: block; margin-top: 8px; }
   </div>
 </section>
 
-<!-- ============ RESEÑAS DE 5 ESTRELLAS ============ -->
-<!-- TODO: cuando el negocio tenga reseñas reales, reemplaza las citas,
-     los nombres y las cifras por las verdaderas. -->
+<!-- ============ RESEÑAS ============ -->
+<!-- Datos reales: nota 4.8 con 2.986 reseñas (fuentes del propio negocio).
+     Si más adelante consiguen citas textuales de huéspedes, se pueden añadir. -->
 <section id="reviews">
   <div class="revelar">
     <div class="ornamento"><span class="linea"></span><span class="rombo"></span><span class="linea"></span></div>
@@ -758,57 +789,44 @@ footer small { color: #6e6257; display: block; margin-top: 8px; }
        Rated by the people of Georgetown</p>
 
     <div class="bloque-reseñas">
-      <div class="nota-general">5.0</div>
-      <!-- Las estrellas se encienden una por una con JavaScript al entrar en pantalla -->
+      <div class="nota-general">4.8</div>
+      <!-- 4 estrellas completas + 1 "parcial" (96%) que refleja la nota real 4.8.
+           Se encienden una por una con JavaScript al entrar en pantalla -->
       <div class="estrellas" id="estrellas-principal">
-        <span class="estrella">&#9733;</span><span class="estrella">&#9733;</span><span class="estrella">&#9733;</span><span class="estrella">&#9733;</span><span class="estrella">&#9733;</span>
+        <span class="estrella">&#9733;</span><span class="estrella">&#9733;</span><span class="estrella">&#9733;</span><span class="estrella">&#9733;</span><span class="estrella estrella-parcial">&#9733;</span>
       </div>
       <p class="resumen-reseñas"
-         data-en='Based on <b>30+ five-star reviews</b> from our guests'
-         data-it='Basato su <b>più di 30 recensioni a 5 stelle</b> dei nostri ospiti'>Based on <b>30+ five-star reviews</b> from our guests</p>
+         data-en='Rated <b>4.8 out of 5</b> based on <b>2,986 guest reviews</b>'
+         data-it='Valutata <b>4,8 su 5</b> con <b>2.986 recensioni</b> degli ospiti'>Rated <b>4.8 out of 5</b> based on <b>2,986 guest reviews</b></p>
 
+      <!-- Lo que los huéspedes elogian (según los datos reales del negocio) -->
       <div class="tarjetas-reseñas">
         <div class="tarjeta-reseña">
           <div class="cabeza">
-            <div class="avatar">MA</div>
+            <div class="avatar">&#127864;</div>
             <div>
-              <div class="nombre">Maria A.</div>
-              <div class="fuente" data-en="Guest" data-it="Ospite">Guest</div>
+              <div class="nombre" data-en="Great cocktails" data-it="Cocktail d'autore">Great cocktails</div>
+              <div class="fuente" data-en="Guests' highlight" data-it="Elogiato dagli ospiti">Guests' highlight</div>
             </div>
-            <div class="estrellas-mini">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
           </div>
-          <p class="cita"
-             data-en='"The best pasta I have had outside of Italy. Nothing compares."'
-             data-it='"La miglior pasta che abbia mangiato fuori dall&apos;Italia. Non c&apos;è paragone."'>
-             "The best pasta I have had outside of Italy. Nothing compares."</p>
         </div>
         <div class="tarjeta-reseña">
           <div class="cabeza">
-            <div class="avatar">JD</div>
+            <div class="avatar">&#127854;</div>
             <div>
-              <div class="nombre">James D.</div>
-              <div class="fuente" data-en="Guest" data-it="Ospite">Guest</div>
+              <div class="nombre" data-en="Delicious desserts" data-it="Dolci deliziosi">Delicious desserts</div>
+              <div class="fuente" data-en="Guests' highlight" data-it="Elogiato dagli ospiti">Guests' highlight</div>
             </div>
-            <div class="estrellas-mini">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
           </div>
-          <p class="cita"
-             data-en='"Warm service, a beautiful room, and the pizza is unreal."'
-             data-it='"Servizio caloroso, sala bellissima e la pizza è incredibile."'>
-             "Warm service, a beautiful room, and the pizza is unreal."</p>
         </div>
         <div class="tarjeta-reseña">
           <div class="cabeza">
-            <div class="avatar">SK</div>
+            <div class="avatar">&#127863;</div>
             <div>
-              <div class="nombre">Sasha K.</div>
-              <div class="fuente" data-en="Guest" data-it="Ospite">Guest</div>
+              <div class="nombre" data-en="Great wine selection" data-it="Ottima selezione di vini">Great wine selection</div>
+              <div class="fuente" data-en="Guests' highlight" data-it="Elogiato dagli ospiti">Guests' highlight</div>
             </div>
-            <div class="estrellas-mini">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
           </div>
-          <p class="cita"
-             data-en='"Our Friday night spot in Georgetown. It never disappoints."'
-             data-it='"Il nostro posto del venerdì sera a Georgetown. Non delude mai."'>
-             "Our Friday night spot in Georgetown. It never disappoints."</p>
         </div>
       </div>
     </div>
@@ -833,6 +851,41 @@ footer small { color: #6e6257; display: block; margin-top: 8px; }
       <div class="foto"><img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=700&q=60" alt="Wood-fired pizza" loading="lazy"></div>
       <div class="foto"><img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=700&q=60" alt="Wine glasses" loading="lazy"></div>
       <div class="foto"><img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=700&q=60" alt="Plated dish" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GOOD TO KNOW (datos reales del negocio) ============ -->
+<section id="info">
+  <div class="revelar">
+    <div class="ornamento"><span class="linea"></span><span class="rombo"></span><span class="linea"></span></div>
+    <h2 data-en="Good to know" data-it="Info utili">Good to know</h2>
+    <p class="subtitulo"
+       data-en="Services, atmosphere and practical details"
+       data-it="Servizi, atmosfera e dettagli pratici">
+       Services, atmosphere and practical details</p>
+    <div class="pills">
+      <!-- Servicio -->
+      <span class="pill" data-en="Outdoor seating" data-it="Posti all'aperto">Outdoor seating</span>
+      <span class="pill" data-en="Takeaway" data-it="Asporto">Takeaway</span>
+      <span class="pill" data-en="Dine-in" data-it="Consumo sul posto">Dine-in</span>
+      <span class="pill" data-en="Terrace seating" data-it="Posti in terrazza">Terrace seating</span>
+      <span class="pill" data-en="Table service" data-it="Servizio al tavolo">Table service</span>
+      <span class="pill" data-en="Catering service" data-it="Servizio catering">Catering service</span>
+      <span class="pill" data-en="Private dining room" data-it="Sala privata">Private dining room</span>
+      <span class="pill" data-en="Bar with cocktails" data-it="Bar con cocktail">Bar with cocktails</span>
+      <!-- Ambiente y público -->
+      <span class="pill" data-en="Trendy &amp; romantic" data-it="Alla moda e romantico">Trendy &amp; romantic</span>
+      <span class="pill" data-en="Casual &amp; relaxed" data-it="Informale e rilassato">Casual &amp; relaxed</span>
+      <span class="pill" data-en="Great for groups" data-it="Ideale per gruppi">Great for groups</span>
+      <span class="pill" data-en="Tourist friendly" data-it="Adatto ai turisti">Tourist friendly</span>
+      <!-- Prácticos -->
+      <span class="pill" data-en="Reservations accepted" data-it="Prenotazioni accettate">Reservations accepted</span>
+      <span class="pill" data-en="Reservations recommended for dinner" data-it="Prenotazione consigliata a cena">Reservations recommended for dinner</span>
+      <span class="pill" data-en="Wheelchair accessible" data-it="Accessibile in sedia a rotelle">Wheelchair accessible</span>
+      <span class="pill" data-en="Free parking" data-it="Parcheggio gratuito">Free parking</span>
+      <span class="pill" data-en="Credit &amp; debit cards" data-it="Carte di credito e debito">Credit &amp; debit cards</span>
+      <span class="pill" data-en="High chairs available" data-it="Seggioloni disponibili">High chairs available</span>
     </div>
   </div>
 </section>
@@ -876,13 +929,13 @@ footer small { color: #6e6257; display: block; margin-top: 8px; }
   <div class="revelar">
     <div class="ornamento"><span class="linea"></span><span class="rombo"></span><span class="linea"></span></div>
     <h2 data-en="Find us" data-it="Dove siamo">Find us</h2>
-    <p class="subtitulo">Church Street, Georgetown, Guyana</p>
+    <p class="subtitulo">301 Church St, Georgetown, Guyana</p>
     <iframe
-      src="https://maps.google.com/maps?q=Amici%2C%20Church%20Street%2C%20Georgetown%2C%20Guyana&output=embed"
+      src="https://maps.google.com/maps?q=Amici%2C%20301%20Church%20St%2C%20Georgetown%2C%20Guyana&output=embed"
       loading="lazy"
       referrerpolicy="no-referrer-when-downgrade"
       allowfullscreen
-      title="Mapa de Amici, Georgetown">
+      title="Mapa de Amici, 301 Church St, Georgetown">
     </iframe>
   </div>
 </section>
@@ -892,9 +945,9 @@ footer small { color: #6e6257; display: block; margin-top: 8px; }
 <section id="contact" class="contacto">
   <div class="script" data-en="See you soon" data-it="A presto">See you soon</div>
   <h2 data-en="See you at the table" data-it="Ci vediamo al tavolo">See you at the table</h2>
-  <p>Church Street, Georgetown, Guyana</p>
-  <p>Phone: +592 XXX-XXXX &nbsp;·&nbsp; Email: hello@amici.gy</p>
-  <a class="btn" href="https://wa.me/592XXXXXXX" data-en="WhatsApp us" data-it="Scrivici su WhatsApp">WhatsApp us</a>
+  <p>301 Church St, Georgetown, Guyana</p>
+  <p>Phone: +592 708 9888 &nbsp;·&nbsp; Reservations recommended for dinner</p>
+  <a class="btn" href="https://wa.me/5927089888" data-en="WhatsApp us" data-it="Scrivici su WhatsApp">WhatsApp us</a>
   <a class="btn btn-transparente" href="#menu" data-en="See the menu" data-it="Vedi il menù">See the menu</a>
 </section>
 
@@ -905,9 +958,9 @@ footer small { color: #6e6257; display: block; margin-top: 8px; }
     <!-- TODO: poner los enlaces reales de redes sociales si existen -->
     <a href="#">Instagram</a><a href="#">Facebook</a><a href="#">WhatsApp</a>
   </div>
-  <small data-en="Church Street, Georgetown, Guyana · Open Mon–Sat"
-         data-it="Church Street, Georgetown, Guyana · Aperto lun–sab">
-         Church Street, Georgetown, Guyana · Open Mon–Sat</small>
+  <small data-en="301 Church St, Georgetown, Guyana · Open Mon–Sat"
+         data-it="301 Church St, Georgetown, Guyana · Aperto lun–sab">
+         301 Church St, Georgetown, Guyana · Open Mon–Sat</small>
 </footer>
 
 <!-- Botón flotante para volver arriba -->
