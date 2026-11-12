@@ -675,13 +675,30 @@ footer small { color: #6e6257; display: block; margin-top: 8px; }
   cursor: pointer;
 }
 
-/* ============ CELULAR ============ */
-@media (max-width: 720px) {
-  .hero h1 { font-size: 3.4rem; letter-spacing: 5px; }
-  .hero .script { font-size: 1.9rem; }
-  section { padding: 70px 20px 20px; }
-  h2 { font-size: 2rem; }
+/* ============ RESPONSIVE ============
+   Ajustes por tamaño de dispositivo, de mayor a menor:
+   tablet (1000px) -> celular grande (720px, aparece el menú
+   hamburguesa) -> celular (520px) -> celular pequeño (360px). */
 
+/* ---- Toques base para pantallas táctiles ---- */
+html { -webkit-text-size-adjust: 100%; }   /* evita el zoom de texto automático de iOS */
+header, .btn, .idioma button, nav ul a, .pill, .galeria .foto, .btn-arriba {
+  -webkit-tap-highlight-color: transparent; /* sin destello gris al tocar */
+}
+/* Alto real de la pantalla del celular (sin contar la barra del navegador) */
+.hero { min-height: 100svh; }
+
+/* ---- Tablet: navegación y secciones más compactas ---- */
+@media (max-width: 1000px) {
+  nav { padding: 16px 20px; gap: 12px; }
+  nav ul { gap: 16px; }
+  nav ul a { font-size: .8rem; letter-spacing: 1.5px; }
+  .logo { font-size: 1.6rem; }
+  section { padding: 80px 22px 26px; }
+}
+
+/* ---- Celular grande: menú hamburguesa ---- */
+@media (max-width: 720px) {
   .btn-menu { display: block; }
   nav ul {
     position: absolute;
@@ -695,12 +712,91 @@ footer small { color: #6e6257; display: block; margin-top: 8px; }
     transition: max-height .3s ease;
     border-bottom: 1px solid var(--linea);
   }
-  nav ul.abierto { max-height: 340px; }
+  nav ul.abierto { max-height: 420px; }
   nav li { border-top: 1px solid rgba(211,169,76,.1); }
   nav ul a { display: block; padding: 15px 26px; }
 
+  section { padding: 70px 20px 20px; }
+  h2 { font-size: 2rem; }
+  .subtitulo { margin-bottom: 34px; }
+
+  .hero h1 { font-size: 3.4rem; letter-spacing: 5px; }
+  .hero .script { font-size: 1.9rem; }
+  .hero p { font-size: 1.2rem; }
+
+  .contacto { padding: 70px 20px; }
+  .contacto .script { font-size: 1.9rem; }
+  .btn { padding: 14px 34px; }
   .btn-transparente { margin-left: 0; margin-top: 14px; }
+
   .nota-general { font-size: 4rem; }
+  .estrellas { font-size: 1.6rem; letter-spacing: 5px; }
+
+  .galeria { gap: 12px; }
+  .galeria .foto { height: 200px; }
+
+  .mapa iframe { height: 320px; }
+
+  .cinta span { letter-spacing: 4px; padding: 0 22px; }
+
+  /* La tabla de horarios se puede deslizar, nunca rompe el diseño */
+  .horarios { overflow-x: auto; }
+  table { min-width: 320px; }
+  td { padding: 11px 18px; font-size: .92rem; }
+}
+
+/* ---- Celular ---- */
+@media (max-width: 520px) {
+  nav { padding: 12px 16px; }
+  header.compacto nav { padding: 10px 16px; }
+  .logo { font-size: 1.4rem; letter-spacing: 2px; }
+  .idioma { padding: 3px 4px; }
+  .idioma button { padding: 4px 8px; font-size: .72rem; }
+
+  section { padding: 60px 16px 18px; }
+  h2 { font-size: 1.7rem; }
+  .subtitulo { font-size: 1.08rem; }
+  .ornamento .linea { width: 44px; }
+
+  .hero h1 { font-size: 2.7rem; letter-spacing: 4px; }
+  .hero .script { font-size: 1.6rem; }
+  .hero p { font-size: 1.08rem; margin-top: 12px; }
+  .hero .franja { font-size: .66rem; letter-spacing: 3px; gap: 10px; }
+  .hero .franja::before, .hero .franja::after { width: 30px; }
+
+  .nota-general { font-size: 3.2rem; }
+  .estrellas { font-size: 1.4rem; letter-spacing: 4px; }
+  .avatar { width: 38px; height: 38px; }
+  .tarjeta-reseña { padding: 24px 20px; }
+
+  .plato .nombre { font-size: 1.08rem; }
+  .nota-precio { font-size: .85rem; }
+
+  /* Galería en 2 columnas para aprovechar el ancho */
+  .galeria { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .galeria .foto { height: 150px; }
+
+  .pill { font-size: .78rem; padding: 8px 14px; }
+
+  .mapa iframe { height: 260px; }
+
+  .contacto .script { font-size: 1.7rem; }
+  .btn { padding: 13px 28px; font-size: .88rem; }
+
+  .lightbox img { max-width: 94%; max-height: 76%; }
+  .lightbox .cerrar { top: 8px; right: 14px; font-size: 2rem; }
+
+  .btn-arriba { right: 14px; bottom: 14px; width: 42px; height: 42px; }
+  footer .social a { padding: 0 9px; font-size: .78rem; }
+}
+
+/* ---- Celular pequeño ---- */
+@media (max-width: 360px) {
+  .hero h1 { font-size: 2.3rem; }
+  .nota-general { font-size: 2.8rem; }
+  .btn { padding: 12px 22px; font-size: .82rem; }
+  td { padding: 10px 10px; font-size: .88rem; }
+  .galeria .foto { height: 120px; }
 }
 </style>
 </head>
