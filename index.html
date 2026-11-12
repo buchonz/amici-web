@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!-- Para que la web se vea bien en celulares -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amici — Italian Restaurant · Georgetown, Guyana</title>
+<meta name="description" content="Amici, Italian restaurant on Church Street, Georgetown, Guyana. Fresh pasta, wood-fired pizza and warm hospitality. Rated 5 stars by our guests.">
+
+<!-- Tipografías de Google Fonts (requiere internet; si no hay conexión,
+     el navegador usa las fuentes de respaldo definidas en el CSS) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Great+Vibes&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   ESTILOS — Tema oscuro elegante, estilo trattoria italiana moderna
+   Cambia las variables aquí y toda la página se ajusta.
+   ============================================================ */
+:root {
+  --fondo: #161210;            /* casi negro cálido */
+  --fondo-2: #1e1815;          /* panel ligeramente más claro */
+  --crema: #f3ead9;            /* texto claro */
+  --crema-suave: #c9bda9;      /* texto claro secundario */
+  --dorado: #d3a94c;
+  --dorado-claro: #ecc87c;
+  --burdeos: #8a2b30;
+  --linea: rgba(211,169,76,.25);
+  --sombra: 0 14px 40px rgba(0,0,0,.45);
+  --radio: 16px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  background: var(--fondo);
+  color: var(--crema);
+  line-height: 1.75;
+  overflow-x: hidden;
+}
+
+/* Títulos serif; .script para acentos manuscritos */
+h1, h2, h3 { font-family: 'Playfair Display', Georgia, serif; font-weight: 600; }
+.script {
+  font-family: 'Great Vibes', cursive;
+  font-weight: 400;
+  color: var(--dorado);
+  font-size: 2rem;
+  line-height: 1;
+}
+
+/* Evita que la barra fija tape las secciones al navegar */
+section[id], div.hero { scroll-margin-top: 70px; }
+
+/* ============ BARRA DE NAVEGACIÓN ============ */
+header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 20;
+  transition: background .35s ease, box-shadow .35s ease;
+  background: transparent;
+}
+header.compacto {
+  background: rgba(22,18,16,.9);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 30px rgba(0,0,0,.35);
+}
+nav {
+  max-width: 1150px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 20px 26px;
+  transition: padding .35s ease;
+}
+header.compacto nav { padding: 12px 26px; }
+.logo {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--dorado);
+  letter-spacing: 3px;
+}
+nav ul { list-style: none; display: flex; gap: 28px; }
+nav ul a {
+  text-decoration: none;
+  color: var(--crema-suave);
+  font-size: .88rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: relative;
+  padding-bottom: 4px;
+  transition: color .3s ease;
+}
+nav ul a::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 0; height: 1px;
+  background: var(--dorado);
+  transition: width .25s ease;
+}
+nav ul a:hover, nav ul a.activo { color: var(--dorado); }
+nav ul a:hover::after, nav ul a.activo::after { width: 100%; }
+
+/* Selector de idioma EN / IT */
+.idioma {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid var(--linea);
+  border-radius: 50px;
+  padding: 4px 6px;
+  flex-shrink: 0;
+}
+.idioma button {
+  background: none;
+  border: none;
+  color: var(--crema-suave);
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 5px 10px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background .25s ease, color .25s ease;
+}
+.idioma button.activo { background: var(--dorado); color: #241a08; }
+.idioma button:hover:not(.activo) { color: var(--dorado); }
+
+/* Botón hamburguesa (solo celular) */
+.btn-menu {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: var(--dorado);
+  line-height: 1;
+}
+
+/* ============ PORTADA ============ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+/* Capa de fondo aparte para el parallax de JavaScript */
+.hero .fondo-parallax {
+  position: absolute;
+  inset: -70px 0;
+  background:
+    linear-gradient(rgba(15,10,8,.66), rgba(15,10,8,.82)),
+    url("https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1900&q=70")
+    center/cover no-repeat;
+  z-index: -1;
+  will-change: transform;
+}
+.hero .script { font-size: 2.6rem; margin-bottom: 6px; }
+.hero h1 {
+  font-size: 6rem;
+  font-weight: 700;
+  letter-spacing: 10px;
+  line-height: 1;
+  color: var(--crema);
+  text-transform: uppercase;
+}
+.hero .franja {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 22px;
+  color: var(--dorado);
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  font-size: .8rem;
+}
+.hero .franja::before, .hero .franja::after {
+  content: "";
+  width: 60px; height: 1px;
+  background: var(--dorado);
+  opacity: .6;
+}
+.hero p {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 1.5rem;
+  color: var(--crema-suave);
+  margin-top: 16px;
+}
+.hero > div { animation: aparecer 1.2s ease both .2s; }
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(26px); }
+  to   { opacity: 1; transform: none; }
+}
+/* Indicador para bajar */
+.indicador-abajo {
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--dorado);
+  font-size: 1.4rem;
+  opacity: .8;
+  animation: rebote 2s ease infinite;
+  text-decoration: none;
+}
+@keyframes rebote {
+  0%, 100% { transform: translate(-50%, 0); }
+  50%      { transform: translate(-50%, 10px); }
+}
+
+/* ============ CINTA EN MOVIMIENTO (marquee) ============ */
+.cinta {
+  border-top: 1px solid var(--linea);
+  border-bottom: 1px solid var(--linea);
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 16px 0;
+  background: var(--fondo-2);
+}
+.cinta .pista {
+  display: inline-block;
+  animation: desplazar 28s linear infinite;
+}
+.cinta span {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.05rem;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--dorado);
+  padding: 0 34px;
+}
+.cinta em { color: var(--crema-suave); font-style: normal; padding: 0 10px; }
+@keyframes desplazar {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ============ SECCIONES GENERALES ============ */
+section { max-width: 1150px; margin: 0 auto; padding: 100px 26px 30px; }
+h2 {
+  text-align: center;
+  font-size: 2.6rem;
+  color: var(--crema);
+}
+.subtitulo {
+  text-align: center;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 1.25rem;
+  color: var(--crema-suave);
+  margin: 10px 0 48px;
+}
+/* Ornamento: línea + rombo + línea bajo cada título */
+.ornamento {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 16px auto 6px;
+}
+.ornamento .linea { width: 70px; height: 1px; background: var(--linea); }
+.ornamento .rombo {
+  width: 9px; height: 9px;
+  background: var(--dorado);
+  transform: rotate(45deg);
+}
+
+/* ============ ESTRELLAS DE RESEÑAS ============ */
+.bloque-reseñas { text-align: center; }
+.nota-general {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 5.5rem;
+  font-weight: 700;
+  color: var(--dorado);
+  line-height: 1;
+}
+.estrellas {
+  font-size: 2rem;
+  letter-spacing: 8px;
+  margin: 8px 0 4px;
+  color: #3a322b;            /* estrellas vacías (oscuras) */
+}
+/* Cada estrella se enciende en dorado con retardo (JavaScript) */
+.estrellas .estrella {
+  display: inline-block;
+  opacity: .25;
+  transform: scale(.8);
+  transition: opacity .4s ease, transform .4s ease, color .4s ease;
+  color: var(--dorado);
+}
+.estrellas .estrella.encendida {
+  opacity: 1;
+  transform: scale(1.15);
+  text-shadow: 0 0 18px rgba(211,169,76,.55);
+}
+.resumen-reseñas {
+  color: var(--crema-suave);
+  font-size: .95rem;
+  margin-bottom: 46px;
+}
+.resumen-reseñas b { color: var(--dorado); }
+
+/* Tarjetas de reseñas individuales */
+.tarjetas-reseñas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  text-align: left;
+}
+.tarjeta-reseña {
+  background: var(--fondo-2);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  padding: 30px 26px;
+  transition: transform .3s ease, border-color .3s ease;
+}
+.tarjeta-reseña:hover {
+  transform: translateY(-6px);
+  border-color: rgba(211,169,76,.5);
+}
+.tarjeta-reseña .cabeza {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.avatar {
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--burdeos), #3c171a);
+  color: var(--dorado-claro);
+  font-weight: 600;
+  font-size: 1.05rem;
+  flex-shrink: 0;
+}
+.tarjeta-reseña .nombre { font-weight: 600; font-size: 1rem; }
+.tarjeta-reseña .fuente { font-size: .8rem; color: var(--crema-suave); }
+.tarjeta-reseña .estrellas-mini {
+  color: var(--dorado);
+  letter-spacing: 3px;
+  margin-left: auto;
+  font-size: .95rem;
+}
+.tarjeta-reseña .cita {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--crema-suave);
+}
+
+/* ============ MENÚ ESTILO TRATTORIA ============ */
+.lista-menu { max-width: 760px; margin: 0 auto; }
+.plato {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 18px 0;
+  border-bottom: 1px dashed rgba(211,169,76,.2);
+  flex-wrap: wrap;
+}
+.plato:first-child { border-top: 1px dashed rgba(211,169,76,.2); }
+.plato .nombre { font-family: 'Playfair Display', Georgia, serif; font-size: 1.25rem; white-space: nowrap; }
+.plato .puntos-guia {
+  flex: 1;
+  min-width: 40px;
+  border-bottom: 1px dotted rgba(211,169,76,.35);
+  transform: translateY(-5px);
+}
+.plato .precio {
+  font-family: 'Playfair Display', Georgia, serif;
+  color: var(--dorado);
+  font-size: 1.15rem;
+  white-space: nowrap;
+}
+.plato .descripcion {
+  flex-basis: 100%;
+  color: var(--crema-suave);
+  font-size: .92rem;
+  margin-top: 2px;
+}
+
+/* ============ GALERÍA DE FOTOS ============ */
+.galeria {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 16px;
+}
+.galeria .foto {
+  height: 260px;
+  border-radius: var(--radio);
+  overflow: hidden;
+  cursor: zoom-in;
+  border: 1px solid var(--linea);
+}
+.galeria .foto img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .5s ease, filter .5s ease;
+  filter: saturate(.9);
+}
+.galeria .foto:hover img {
+  transform: scale(1.08);
+  filter: saturate(1.1);
+}
+
+/* ============ HORARIOS Y ESTADO ============ */
+.estado { display: flex; justify-content: center; margin: -20px 0 34px; }
+.estado span {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 22px;
+  border-radius: 50px;
+  font-size: .88rem;
+  font-weight: 600;
+  letter-spacing: .5px;
+  background: var(--fondo-2);
+  border: 1px solid var(--linea);
+}
+.estado .punto { width: 10px; height: 10px; border-radius: 50%; }
+.estado.abierto .punto { background: #2fbf71; animation: latido 1.6s ease infinite; }
+.estado.abierto { color: #6fdca0; }
+.estado.cerrado .punto { background: #c0392b; }
+.estado.cerrado { color: #e08d84; }
+@keyframes latido {
+  0%   { box-shadow: 0 0 0 0 rgba(47,191,113,.45); }
+  70%  { box-shadow: 0 0 0 9px rgba(47,191,113,0); }
+  100% { box-shadow: 0 0 0 0 rgba(47,191,113,0); }
+}
+.horarios { display: flex; justify-content: center; }
+table { border-collapse: collapse; min-width: 380px; }
+td { padding: 12px 24px; border-bottom: 1px solid rgba(211,169,76,.12); font-size: .98rem; }
+td:first-child { font-weight: 600; }
+tr.hoy { background: rgba(211,169,76,.08); }
+/* El sufijo "today/oggi" cambia según el idioma (clase en <html>) */
+tr.hoy td:first-child::after {
+  content: " · today";
+  color: var(--dorado);
+  font-weight: 600;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-left: 8px;
+}
+html.it tr.hoy td:first-child::after { content: " · oggi"; }
+.estado-cerrado { color: var(--crema-suave); font-style: italic; }
+
+/* ============ MAPA ============ */
+.mapa iframe {
+  width: 100%;
+  height: 400px;
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  filter: grayscale(.35) contrast(1.02);
+}
+
+/* ============ CONTACTO ============ */
+.contacto {
+  max-width: none;
+  background:
+    linear-gradient(rgba(20,14,12,.88), rgba(20,14,12,.92)),
+    url("https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1600&q=60")
+    center/cover no-repeat;
+  text-align: center;
+  padding: 90px 26px;
+  margin-top: 90px;
+  border-top: 1px solid var(--linea);
+  border-bottom: 1px solid var(--linea);
+}
+.contacto .script { font-size: 2.4rem; }
+.contacto p { margin: 6px 0; color: var(--crema-suave); }
+.btn {
+  display: inline-block;
+  margin-top: 26px;
+  padding: 15px 42px;
+  background: var(--dorado);
+  color: #241a08;
+  text-decoration: none;
+  border-radius: 50px;
+  font-size: .98rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+  box-shadow: 0 8px 22px rgba(211,169,76,.3);
+}
+.btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+  box-shadow: 0 12px 28px rgba(211,169,76,.4);
+}
+.btn-transparente {
+  background: transparent;
+  color: var(--dorado);
+  border: 1px solid var(--dorado);
+  box-shadow: none;
+  margin-left: 14px;
+}
+.btn-transparente:hover { background: rgba(211,169,76,.12); }
+
+/* ============ PIE DE PÁGINA ============ */
+footer { text-align: center; padding: 40px 20px 30px; }
+footer .logo-pie {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.6rem;
+  color: var(--dorado);
+  letter-spacing: 3px;
+}
+footer .social { margin: 14px 0; }
+footer .social a {
+  color: var(--crema-suave);
+  text-decoration: none;
+  font-size: .85rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 0 14px;
+  transition: color .3s ease;
+}
+footer .social a:hover { color: var(--dorado); }
+footer small { color: #6e6257; display: block; margin-top: 8px; }
+
+/* ============ BOTÓN VOLVER ARRIBA ============ */
+.btn-arriba {
+  position: fixed;
+  right: 22px; bottom: 22px;
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  border: 1px solid var(--dorado);
+  background: rgba(22,18,16,.85);
+  color: var(--dorado);
+  font-size: 1.1rem;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity .3s ease, transform .3s ease, visibility .3s;
+  z-index: 15;
+}
+.btn-arriba.visible { opacity: 1; visibility: visible; transform: none; }
+.btn-arriba:hover { background: var(--dorado); color: #241a08; }
+
+/* ============ APARICIONES AL HACER SCROLL ============ */
+.revelar {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity .9s ease, transform .9s ease;
+}
+.revelar.visible { opacity: 1; transform: none; }
+
+/* ============ LIGHTBOX ============ */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(10,7,5,.93);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .3s ease;
+}
+.lightbox.abierto { opacity: 1; visibility: visible; }
+.lightbox img {
+  max-width: 88%;
+  max-height: 82%;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+}
+.lightbox .cerrar {
+  position: absolute;
+  top: 18px; right: 28px;
+  background: none;
+  border: none;
+  color: var(--dorado);
+  font-size: 2.4rem;
+  cursor: pointer;
+}
+
+/* ============ CELULAR ============ */
+@media (max-width: 720px) {
+  .hero h1 { font-size: 3.4rem; letter-spacing: 5px; }
+  .hero .script { font-size: 1.9rem; }
+  section { padding: 70px 20px 20px; }
+  h2 { font-size: 2rem; }
+
+  .btn-menu { display: block; }
+  nav ul {
+    position: absolute;
+    top: 100%;
+    left: 0; right: 0;
+    background: rgba(22,18,16,.97);
+    flex-direction: column;
+    gap: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .3s ease;
+    border-bottom: 1px solid var(--linea);
+  }
+  nav ul.abierto { max-height: 340px; }
+  nav li { border-top: 1px solid rgba(211,169,76,.1); }
+  nav ul a { display: block; padding: 15px 26px; }
+
+  .btn-transparente { margin-left: 0; margin-top: 14px; }
+  .nota-general { font-size: 4rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ NAVEGACIÓN ============ -->
+<header id="barra">
+  <nav>
+    <div class="logo">AMICI</div>
+    <ul id="menu-lista">
+      <li><a href="#about" data-en="About" data-it="Chi siamo">About</a></li>
+      <li><a href="#menu" data-en="Menu" data-it="Menù">Menu</a></li>
+      <li><a href="#reviews" data-en="Reviews" data-it="Recensioni">Reviews</a></li>
+      <li><a href="#hours" data-en="Hours" data-it="Orari">Hours</a></li>
+      <li><a href="#location" data-en="Location" data-it="Dove siamo">Location</a></li>
+      <li><a href="#contact" data-en="Contact" data-it="Contatti">Contact</a></li>
+    </ul>
+    <!-- Selector de idioma: EN por defecto, IT para italiano -->
+    <div class="idioma">
+      <button id="lang-en" class="activo">EN</button>
+      <button id="lang-it">IT</button>
+    </div>
+    <button class="btn-menu" id="btn-menu" aria-label="Abrir menú">&#9776;</button>
+  </nav>
+</header>
+
+<!-- ============ PORTADA ============ -->
+<div class="hero" id="inicio">
+  <div class="fondo-parallax" id="parallax"></div>
+  <div>
+    <div class="script" data-en="Welcome to" data-it="Benvenuti da">Welcome to</div>
+    <h1>Amici</h1>
+    <div class="franja">Church Street &middot; Georgetown &middot; Guyana</div>
+    <p data-en="Fresh pasta, fire-kissed pizza and warm Guyanese hospitality."
+       data-it="Pasta fresca, pizza al forno a legna e calda ospitalità.">
+       Fresh pasta, fire-kissed pizza and warm Guyanese hospitality.</p>
+    <a href="#contact" class="btn" data-en="Reserve a table" data-it="Prenota un tavolo">Reserve a table</a>
+  </div>
+  <a href="#about" class="indicador-abajo" aria-label="Bajar">&#9660;</a>
+</div>
+
+<!-- ============ CINTA EN MOVIMIENTO ============ -->
+<div class="cinta" aria-hidden="true">
+  <div class="pista">
+    <span data-en="Fresh pasta" data-it="Pasta fresca">Fresh pasta</span><em>&#10022;</em>
+    <span data-en="Wood-fired pizza" data-it="Pizza a legna">Wood-fired pizza</span><em>&#10022;</em>
+    <span data-en="Wine &amp; Aperitivo" data-it="Vino &amp; Aperitivo">Wine &amp; Aperitivo</span><em>&#10022;</em>
+    <span data-en="Dolci" data-it="Dolci">Dolci</span><em>&#10022;</em>
+    <span data-en="Fresh pasta" data-it="Pasta fresca">Fresh pasta</span><em>&#10022;</em>
+    <span data-en="Wood-fired pizza" data-it="Pizza a legna">Wood-fired pizza</span><em>&#10022;</em>
+    <span data-en="Wine &amp; Aperitivo" data-it="Vino &amp; Aperitivo">Wine &amp; Aperitivo</span><em>&#10022;</em>
+    <span data-en="Dolci" data-it="Dolci">Dolci</span><em>&#10022;</em>
+  </div>
+</div>
+
+<!-- ============ SOBRE NOSOTROS ============ -->
+<!-- TODO: editar con la historia real del restaurante -->
+<section id="about">
+  <div class="revelar">
+    <div class="ornamento"><span class="linea"></span><span class="rombo"></span><span class="linea"></span></div>
+    <h2 data-en="About Amici" data-it="Chi è Amici">About Amici</h2>
+    <p class="subtitulo"
+       data-en="A taste of Italy in the heart of Georgetown"
+       data-it="Un assaggio d'Italia nel cuore di Georgetown">
+       A taste of Italy in the heart of Georgetown</p>
+    <p style="max-width:760px;margin:0 auto;text-align:center;font-family:'Cormorant Garamond',Georgia,serif;font-size:1.25rem;color:var(--crema-suave);"
+       data-en='Amici — "friends" in Italian — is exactly how you will feel when you walk through our door on Church Street. Handmade pasta, pizzas from the oven, good wine and warm Guyanese hospitality: dinner with us is dinner with friends.'
+       data-it='Amici — "amici" in italiano — è esattamente ciò che proverai varcando la nostra porta su Church Street. Pasta fatta a mano, pizza dal forno, buon vino e calda ospitalità guyanese: cenare da noi è cenare con gli amici.'>
+      Amici — "friends" in Italian — is exactly how you will feel when you walk through our door on Church Street. Handmade pasta, pizzas from the oven, good wine and warm Guyanese hospitality: dinner with us is dinner with friends.
+    </p>
+  </div>
+</section>
+
+<!-- ============ MENÚ ESTILO TRATTORIA ============ -->
+<!-- TODO: reemplazar platos y precios por el menú real -->
+<section id="menu">
+  <div class="revelar">
+    <div class="ornamento"><span class="linea"></span><span class="rombo"></span><span class="linea"></span></div>
+    <h2 data-en="The Menu" data-it="Il Menù">The Menu</h2>
+    <p class="subtitulo"
+       data-en="House highlights — ask for today's specials"
+       data-it="I punti forti della casa — chiedi gli speciali del giorno">
+       House highlights — ask for today's specials</p>
+    <div class="lista-menu">
+      <div class="plato">
+        <span class="nombre">Tagliatelle al Pomodoro</span>
+        <span class="puntos-guia"></span>
+        <span class="precio">G$ —</span>
+        <span class="descripcion"
+          data-en="Fresh hand-cut pasta, slow-simmered tomato &amp; basil."
+          data-it="Pasta fresca tagliata a mano, pomodoro a cottura lenta e basilico.">
+          Fresh hand-cut pasta, slow-simmered tomato &amp; basil.</span>
+      </div>
+      <div class="plato">
+        <span class="nombre">Pizza Margherita</span>
+        <span class="puntos-guia"></span>
+        <span class="precio">G$ —</span>
+        <span class="descripcion"
+          data-en="San Marzano tomato, fior di latte, basil, olive oil."
+          data-it="Pomodoro San Marzano, fior di latte, basilico, olio d'oliva.">
+          San Marzano tomato, fior di latte, basil, olive oil.</span>
+      </div>
+      <div class="plato">
+        <span class="nombre">Osso Buco</span>
+        <span class="puntos-guia"></span>
+        <span class="precio">G$ —</span>
+        <span class="descripcion"
+          data-en="Slow-braised veal shank, saffron risotto, gremolata."
+          data-it="Ossobuco brasato lentamente, risotto allo zafferano, gremolata.">
+          Slow-braised veal shank, saffron risotto, gremolata.</span>
+      </div>
+      <div class="plato">
+        <span class="nombre">Tiramisù della Casa</span>
+        <span class="puntos-guia"></span>
+        <span class="precio">G$ —</span>
+        <span class="descripcion"
+          data-en="Espresso-soaked savoiardi, mascarpone, cocoa."
+          data-it="Savoiardi all'espresso, mascarpone, cacao.">
+          Espresso-soaked savoiardi, mascarpone, cocoa.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RESEÑAS DE 5 ESTRELLAS ============ -->
+<!-- TODO: cuando el negocio tenga reseñas reales, reemplaza las citas,
+     los nombres y las cifras por las verdaderas. -->
+<section id="reviews">
+  <div class="revelar">
+    <div class="ornamento"><span class="linea"></span><span class="rombo"></span><span class="linea"></span></div>
+    <h2 data-en="Loved by our guests" data-it="Amati dai nostri ospiti">Loved by our guests</h2>
+    <p class="subtitulo"
+       data-en="Rated by the people of Georgetown"
+       data-it="Valutata dalla gente di Georgetown">
+       Rated by the people of Georgetown</p>
+
+    <div class="bloque-reseñas">
+      <div class="nota-general">5.0</div>
+      <!-- Las estrellas se encienden una por una con JavaScript al entrar en pantalla -->
+      <div class="estrellas" id="estrellas-principal">
+        <span class="estrella">&#9733;</span><span class="estrella">&#9733;</span><span class="estrella">&#9733;</span><span class="estrella">&#9733;</span><span class="estrella">&#9733;</span>
+      </div>
+      <p class="resumen-reseñas"
+         data-en='Based on <b>30+ five-star reviews</b> from our guests'
+         data-it='Basato su <b>più di 30 recensioni a 5 stelle</b> dei nostri ospiti'>Based on <b>30+ five-star reviews</b> from our guests</p>
+
+      <div class="tarjetas-reseñas">
+        <div class="tarjeta-reseña">
+          <div class="cabeza">
+            <div class="avatar">MA</div>
+            <div>
+              <div class="nombre">Maria A.</div>
+              <div class="fuente" data-en="Guest" data-it="Ospite">Guest</div>
+            </div>
+            <div class="estrellas-mini">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="cita"
+             data-en='"The best pasta I have had outside of Italy. Nothing compares."'
+             data-it='"La miglior pasta che abbia mangiato fuori dall&apos;Italia. Non c&apos;è paragone."'>
+             "The best pasta I have had outside of Italy. Nothing compares."</p>
+        </div>
+        <div class="tarjeta-reseña">
+          <div class="cabeza">
+            <div class="avatar">JD</div>
+            <div>
+              <div class="nombre">James D.</div>
+              <div class="fuente" data-en="Guest" data-it="Ospite">Guest</div>
+            </div>
+            <div class="estrellas-mini">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="cita"
+             data-en='"Warm service, a beautiful room, and the pizza is unreal."'
+             data-it='"Servizio caloroso, sala bellissima e la pizza è incredibile."'>
+             "Warm service, a beautiful room, and the pizza is unreal."</p>
+        </div>
+        <div class="tarjeta-reseña">
+          <div class="cabeza">
+            <div class="avatar">SK</div>
+            <div>
+              <div class="nombre">Sasha K.</div>
+              <div class="fuente" data-en="Guest" data-it="Ospite">Guest</div>
+            </div>
+            <div class="estrellas-mini">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="cita"
+             data-en='"Our Friday night spot in Georgetown. It never disappoints."'
+             data-it='"Il nostro posto del venerdì sera a Georgetown. Non delude mai."'>
+             "Our Friday night spot in Georgetown. It never disappoints."</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALERÍA ============ -->
+<!-- TODO: estas fotos son de archivo (Unsplash, uso libre) SOLO para la demo.
+     Antes de publicar, reemplázalas por fotos reales del restaurante
+     con permiso del dueño. Para cambiarlas, edita cada src="..." abajo. -->
+<section id="gallery">
+  <div class="revelar">
+    <div class="ornamento"><span class="linea"></span><span class="rombo"></span><span class="linea"></span></div>
+    <h2 data-en="Gallery" data-it="Galleria">Gallery</h2>
+    <p class="subtitulo"
+       data-en="A glimpse of the table"
+       data-it="Uno sguardo al tavolo">
+       A glimpse of the table</p>
+    <div class="galeria">
+      <div class="foto"><img src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=700&q=60" alt="Fresh pasta dish" loading="lazy"></div>
+      <!-- La imagen anterior de pizza daba 404; esta fue verificada y carga bien -->
+      <div class="foto"><img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=700&q=60" alt="Wood-fired pizza" loading="lazy"></div>
+      <div class="foto"><img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=700&q=60" alt="Wine glasses" loading="lazy"></div>
+      <div class="foto"><img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=700&q=60" alt="Plated dish" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HORARIOS ============ -->
+<!-- TODO: poner los horarios reales. OJO: el JavaScript lee esta tabla
+     (atributos data-dias) para calcular "Open now / Closed" y resaltar hoy. -->
+<section id="hours">
+  <div class="revelar">
+    <div class="ornamento"><span class="linea"></span><span class="rombo"></span><span class="linea"></span></div>
+    <h2 data-en="Opening hours" data-it="Orari di apertura">Opening hours</h2>
+    <p class="subtitulo"
+       data-en="Come see us"
+       data-it="Vieni a trovarci">
+       Come see us</p>
+    <div class="estado" id="badge-estado"><span><i class="punto"></i><em id="texto-estado">Checking…</em></span></div>
+    <div class="horarios">
+      <table id="tabla-horarios">
+        <tr data-dias="1,2,3,4,5">
+          <td data-en="Monday – Friday" data-it="Lunedì – Venerdì">Monday – Friday</td>
+          <td>11:00 – 22:00</td>
+        </tr>
+        <tr data-dias="6">
+          <td data-en="Saturday" data-it="Sabato">Saturday</td>
+          <td>11:00 – 23:00</td>
+        </tr>
+        <tr data-dias="0">
+          <td data-en="Sunday" data-it="Domenica">Sunday</td>
+          <td class="estado-cerrado" data-en="Closed" data-it="Chiuso">Closed</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ UBICACIÓN ============ -->
+<!-- El mapa se inserta con un iframe público de Google Maps, SIN API KEY.
+     Versión "oficial" para producción: Google Maps > buscar Amici >
+     Compartir > Insertar un mapa > copiar el <iframe> y reemplazar este. -->
+<section id="location" class="mapa">
+  <div class="revelar">
+    <div class="ornamento"><span class="linea"></span><span class="rombo"></span><span class="linea"></span></div>
+    <h2 data-en="Find us" data-it="Dove siamo">Find us</h2>
+    <p class="subtitulo">Church Street, Georgetown, Guyana</p>
+    <iframe
+      src="https://maps.google.com/maps?q=Amici%2C%20Church%20Street%2C%20Georgetown%2C%20Guyana&output=embed"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      allowfullscreen
+      title="Mapa de Amici, Georgetown">
+    </iframe>
+  </div>
+</section>
+
+<!-- ============ CONTACTO ============ -->
+<!-- TODO: poner teléfono real del negocio en el enlace de WhatsApp -->
+<section id="contact" class="contacto">
+  <div class="script" data-en="See you soon" data-it="A presto">See you soon</div>
+  <h2 data-en="See you at the table" data-it="Ci vediamo al tavolo">See you at the table</h2>
+  <p>Church Street, Georgetown, Guyana</p>
+  <p>Phone: +592 XXX-XXXX &nbsp;·&nbsp; Email: hello@amici.gy</p>
+  <a class="btn" href="https://wa.me/592XXXXXXX" data-en="WhatsApp us" data-it="Scrivici su WhatsApp">WhatsApp us</a>
+  <a class="btn btn-transparente" href="#menu" data-en="See the menu" data-it="Vedi il menù">See the menu</a>
+</section>
+
+<!-- ============ PIE DE PÁGINA ============ -->
+<footer>
+  <div class="logo-pie">AMICI</div>
+  <div class="social">
+    <!-- TODO: poner los enlaces reales de redes sociales si existen -->
+    <a href="#">Instagram</a><a href="#">Facebook</a><a href="#">WhatsApp</a>
+  </div>
+  <small data-en="Church Street, Georgetown, Guyana · Open Mon–Sat"
+         data-it="Church Street, Georgetown, Guyana · Aperto lun–sab">
+         Church Street, Georgetown, Guyana · Open Mon–Sat</small>
+</footer>
+
+<!-- Botón flotante para volver arriba -->
+<button class="btn-arriba" id="btn-arriba" aria-label="Volver arriba">&#9650;</button>
+
+<!-- Visor de fotos a pantalla completa (lightbox) -->
+<div class="lightbox" id="lightbox">
+  <button class="cerrar" id="lb-cerrar" aria-label="Cerrar">&times;</button>
+  <img id="lb-imagen" src="" alt="Foto ampliada">
+</div>
+
+<script>
+/* ============================================================
+   JAVASCRIPT DE LA PÁGINA (puro, sin librerías)
+   ============================================================ */
+
+/* ---------- 0) Idioma: inglés por defecto + opción italiano ----------
+   Cada texto traducible lleva atributos data-en y data-it.
+   La elección se guarda en el navegador (localStorage) para que,
+   al volver a abrir la web, quede en el idioma elegido. */
+var idiomaActual = "en";
+
+/* Textos que JavaScript genera dinámicamente (badge Open/Closed).
+   IMPORTANTE: debe declararse ANTES de que se use aplicarIdioma(),
+   si no, el script falla y el contenido queda invisible. */
+var TEXTOS_ESTADO = {
+  en: { abierto: "Open now", cerrado: "Closed right now" },
+  it: { abierto: "Aperto ora", cerrado: "Chiuso in questo momento" }
+};
+
+function aplicarIdioma(idioma) {
+  idiomaActual = idioma;
+  document.documentElement.classList.toggle("it", idioma === "it");
+  document.documentElement.lang = idioma;
+
+  document.querySelectorAll("[data-en]").forEach(function (el) {
+    /* Usa textContent para textos simples y innerHTML cuando
+       el contenido incluye etiquetas (por ejemplo, <b> en reseñas) */
+    var valor = idioma === "it" ? el.getAttribute("data-it") : el.getAttribute("data-en");
+    if (/<[a-z]/i.test(valor)) {
+      el.innerHTML = valor;
+    } else {
+      el.textContent = valor;
+    }
+  });
+
+  document.getElementById("lang-en").classList.toggle("activo", idioma === "en");
+  document.getElementById("lang-it").classList.toggle("activo", idioma === "it");
+
+  /* Los textos que calcula JavaScript también se actualizan */
+  calcularEstado();
+
+  try { localStorage.setItem("amici-idioma", idioma); } catch (e) { /* sin problema */ }
+}
+
+document.getElementById("lang-en").addEventListener("click", function () { aplicarIdioma("en"); });
+document.getElementById("lang-it").addEventListener("click", function () { aplicarIdioma("it"); });
+
+/* Idioma guardado de la visita anterior (o "en" por defecto).
+   El acceso a localStorage va protegido: si el navegador lo bloquea
+   (por ejemplo, en algunos casos con file://), usamos "en" sin fallar. */
+var idiomaGuardado = "en";
+try {
+  idiomaGuardado = localStorage.getItem("amici-idioma") || "en";
+} catch (e) { /* localStorage no disponible: seguimos con inglés */ }
+aplicarIdioma(idiomaGuardado);
+
+/* ---------- 1) Menú hamburguesa para celulares ---------- */
+var botonMenu = document.getElementById("btn-menu");
+var listaMenu = document.getElementById("menu-lista");
+
+botonMenu.addEventListener("click", function () {
+  listaMenu.classList.toggle("abierto");
+});
+listaMenu.addEventListener("click", function () {
+  listaMenu.classList.remove("abierto");
+});
+
+/* ---------- 2) Barra fija + parallax + scroll-spy + botón arriba ---------- */
+var barra = document.getElementById("barra");
+var btnArriba = document.getElementById("btn-arriba");
+
+function alHacerScroll() {
+  var bajado = window.scrollY > 60;
+  barra.classList.toggle("compacto", bajado);
+  btnArriba.classList.toggle("visible", window.scrollY > 500);
+
+  /* Parallax: el fondo de portada se mueve más lento que la página */
+  var fondo = document.getElementById("parallax");
+  if (window.scrollY < window.innerHeight) {
+    fondo.style.transform = "translateY(" + window.scrollY * 0.35 + "px)";
+  }
+
+  /* Scroll-spy: resalta la sección visible en el menú */
+  var secciones = document.querySelectorAll("section[id], div.hero");
+  var enlaceActual = null;
+  secciones.forEach(function (s) {
+    if (s.getBoundingClientRect().top <= 130) enlaceActual = s.id;
+  });
+  document.querySelectorAll("nav ul a").forEach(function (a) {
+    a.classList.toggle("activo", a.getAttribute("href") === "#" + enlaceActual);
+  });
+}
+window.addEventListener("scroll", alHacerScroll, { passive: true });
+alHacerScroll();
+
+btnArriba.addEventListener("click", function () {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+/* ---------- 3) Aparición de secciones al entrar en pantalla ---------- */
+var observador = new IntersectionObserver(function (entradas) {
+  entradas.forEach(function (e) {
+    if (e.isIntersecting) {
+      e.target.classList.add("visible");
+
+      /* Si la sección visible contiene las estrellas grandes,
+         se encienden una por una (efecto de calificación 5/5) */
+      var estrellas = e.target.querySelectorAll("#estrellas-principal .estrella");
+      if (estrellas.length && !estrellas[0].classList.contains("encendida")) {
+        estrellas.forEach(function (est, i) {
+          setTimeout(function () {
+            est.classList.add("encendida");
+          }, 250 * i);
+        });
+      }
+      observador.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll(".revelar").forEach(function (el) {
+  observador.observe(el);
+});
+
+/* ---------- 4) Estado "Open now / Closed" ----------
+   Lee la tabla de horarios (data-dias) y la hora del visitante.
+   OJO: usa el reloj local del dispositivo. Los textos salen en el
+   idioma elegido (inglés o italiano). Los textos están definidos
+   al inicio del script, junto con el resto del sistema de idiomas. */
+
+function calcularEstado() {
+  var ahora = new Date();
+  var dia = ahora.getDay();
+  var horas = ahora.getHours() + ahora.getMinutes() / 60;
+
+  var filas = document.querySelectorAll("#tabla-horarios tr[data-dias]");
+  var abierto = false;
+  filas.forEach(function (fila) {
+    var dias = fila.getAttribute("data-dias").split(",").map(Number);
+    var texto = fila.cells[1].textContent.trim();
+
+    if (dias.indexOf(dia) !== -1 && !/closed|chiuso/i.test(texto)) {
+      var partes = texto.match(/(\d{1,2}):(\d{2})\s*[–-]\s*(\d{1,2}):(\d{2})/);
+      if (partes) {
+        var abre = parseInt(partes[1], 10) + parseInt(partes[2], 10) / 60;
+        var cierra = parseInt(partes[3], 10) + parseInt(partes[4], 10) / 60;
+        if (horas >= abre && horas < cierra) abierto = true;
+      }
+    }
+  });
+
+  var textos = TEXTOS_ESTADO[idiomaActual] || TEXTOS_ESTADO.en;
+  var badge = document.getElementById("badge-estado");
+  var textoEstado = document.getElementById("texto-estado");
+  badge.classList.toggle("abierto", abierto);
+  badge.classList.toggle("cerrado", !abierto);
+  textoEstado.textContent = abierto ? textos.abierto : textos.cerrado;
+
+  filas.forEach(function (fila) {
+    var dias = fila.getAttribute("data-dias").split(",").map(Number);
+    fila.classList.toggle("hoy", dias.indexOf(dia) !== -1);
+  });
+}
+
+/* ---------- 5) Lightbox para la galería ---------- */
+var lightbox = document.getElementById("lightbox");
+var lbImagen = document.getElementById("lb-imagen");
+
+document.querySelectorAll(".galeria .foto").forEach(function (foto) {
+  foto.addEventListener("click", function () {
+    var img = foto.querySelector("img");
+    if (img) {
+      lbImagen.src = img.src;
+      lightbox.classList.add("abierto");
+    }
+  });
+});
+function cerrarLightbox() { lightbox.classList.remove("abierto"); }
+document.getElementById("lb-cerrar").addEventListener("click", cerrarLightbox);
+lightbox.addEventListener("click", function (e) {
+  if (e.target === lightbox) cerrarLightbox();
+});
+document.addEventListener("keydown", function (e) {
+  if (e.key === "Escape") cerrarLightbox();
+});
+</script>
+
+</body>
+</html>
