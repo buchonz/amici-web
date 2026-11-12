@@ -425,6 +425,15 @@ h2 {
   margin-top: 2px;
 }
 
+/* Nota de precio promedio del menú */
+.nota-precio {
+  text-align: center;
+  margin-top: 28px;
+  color: var(--crema-suave);
+  font-size: .95rem;
+}
+.nota-precio b { color: var(--dorado); }
+
 /* ============ GALERÍA DE FOTOS ============ */
 .galeria {
   display: grid;
@@ -725,8 +734,10 @@ footer small { color: #6e6257; display: block; margin-top: 8px; }
   </div>
 </section>
 
-<!-- ============ MENÚ ESTILO TRATTORIA ============ -->
-<!-- TODO: reemplazar platos y precios por el menú real -->
+<!-- ============ MENÚ REAL ============ -->
+<!-- Platos reales del menú nuevo (fuente: fotos oficiales del negocio).
+     Precios individuales: pendiente de confirmar; se muestra el precio
+     promedio por persona informado por el dueño (G$ 10.000). -->
 <section id="menu">
   <div class="revelar">
     <div class="ornamento"><span class="linea"></span><span class="rombo"></span><span class="linea"></span></div>
@@ -737,42 +748,66 @@ footer small { color: #6e6257; display: block; margin-top: 8px; }
        House highlights — ask for today's specials</p>
     <div class="lista-menu">
       <div class="plato">
-        <span class="nombre">Tagliatelle al Pomodoro</span>
+        <span class="nombre">Iceberg Insalata</span>
         <span class="puntos-guia"></span>
-        <span class="precio">G$ —</span>
         <span class="descripcion"
-          data-en="Fresh hand-cut pasta, slow-simmered tomato &amp; basil."
-          data-it="Pasta fresca tagliata a mano, pomodoro a cottura lenta e basilico.">
-          Fresh hand-cut pasta, slow-simmered tomato &amp; basil.</span>
+          data-en="Crisp iceberg wedge, creamy dressing, radish &amp; candied pecans."
+          data-it="Iceberg croccante, dressing cremoso, ravanello e noci pecan caramellate.">
+          Crisp iceberg wedge, creamy dressing, radish &amp; candied pecans.</span>
       </div>
       <div class="plato">
-        <span class="nombre">Pizza Margherita</span>
+        <span class="nombre">Amici Polpette</span>
         <span class="puntos-guia"></span>
-        <span class="precio">G$ —</span>
         <span class="descripcion"
-          data-en="San Marzano tomato, fior di latte, basil, olive oil."
-          data-it="Pomodoro San Marzano, fior di latte, basilico, olio d'oliva.">
-          San Marzano tomato, fior di latte, basil, olive oil.</span>
+          data-en="House meatballs in tomato sauce with grilled bread."
+          data-it="Polpette della casa al pomodoro con pane grigliato.">
+          House meatballs in tomato sauce with grilled bread.</span>
       </div>
       <div class="plato">
-        <span class="nombre">Osso Buco</span>
+        <span class="nombre">Nero Linguini Pasta</span>
         <span class="puntos-guia"></span>
-        <span class="precio">G$ —</span>
         <span class="descripcion"
-          data-en="Slow-braised veal shank, saffron risotto, gremolata."
-          data-it="Ossobuco brasato lentamente, risotto allo zafferano, gremolata.">
-          Slow-braised veal shank, saffron risotto, gremolata.</span>
+          data-en="Squid-ink linguini with sautéed shrimp and mussels."
+          data-it="Linguini al nero di seppia con gamberi e cozze saltati.">
+          Squid-ink linguini with sautéed shrimp and mussels.</span>
       </div>
       <div class="plato">
-        <span class="nombre">Tiramisù della Casa</span>
+        <span class="nombre">Gambari</span>
         <span class="puntos-guia"></span>
-        <span class="precio">G$ —</span>
         <span class="descripcion"
-          data-en="Espresso-soaked savoiardi, mascarpone, cocoa."
-          data-it="Savoiardi all'espresso, mascarpone, cacao.">
-          Espresso-soaked savoiardi, mascarpone, cocoa.</span>
+          data-en="Sautéed shrimp in a creamy sauce."
+          data-it="Gamberi saltati in salsa cremosa.">
+          Sautéed shrimp in a creamy sauce.</span>
+      </div>
+      <div class="plato">
+        <span class="nombre">Cotoletta</span>
+        <span class="puntos-guia"></span>
+        <span class="descripcion"
+          data-en="Signature cutlet with capers &amp; lemon."
+          data-it="Cotoletta della casa con capperi e limone.">
+          Signature cutlet with capers &amp; lemon.</span>
+      </div>
+      <div class="plato">
+        <span class="nombre">Branzino</span>
+        <span class="puntos-guia"></span>
+        <span class="descripcion"
+          data-en="Grilled sea bass with potatoes and olives."
+          data-it="Branzino grigliato con patate e olive.">
+          Grilled sea bass with potatoes and olives.</span>
+      </div>
+      <div class="plato">
+        <span class="nombre">Lamb Loin</span>
+        <span class="puntos-guia"></span>
+        <span class="descripcion"
+          data-en="Sliced lamb loin with squash purée and pearl onions."
+          data-it="Lonza di agnello a fette con purè di zucca e cipolline.">
+          Sliced lamb loin with squash purée and pearl onions.</span>
       </div>
     </div>
+    <p class="nota-precio"
+       data-en='Average price: <b>around G$10,000 per person</b>'
+       data-it='Prezzo medio: <b>circa G$ 10.000 a persona</b>'>
+       Average price: <b>around G$10,000 per person</b></p>
   </div>
 </section>
 
@@ -799,8 +834,49 @@ footer small { color: #6e6257; display: block; margin-top: 8px; }
          data-en='Rated <b>4.8 out of 5</b> based on <b>2,986 guest reviews</b>'
          data-it='Valutata <b>4,8 su 5</b> con <b>2.986 recensioni</b> degli ospiti'>Rated <b>4.8 out of 5</b> based on <b>2,986 guest reviews</b></p>
 
-      <!-- Lo que los huéspedes elogian (según los datos reales del negocio) -->
+      <!-- Reseñas reales de huéspedes (traducidas al inglés/italiano; en
+           Google están escritas en el idioma original de cada autor) -->
       <div class="tarjetas-reseñas">
+        <div class="tarjeta-reseña">
+          <div class="cabeza">
+            <div class="avatar">&#9733;</div>
+            <div>
+              <div class="nombre" data-en="Guest review" data-it="Recensione di un ospite">Guest review</div>
+              <div class="fuente" data-en="From Google reviews" data-it="Dalle recensioni Google">From Google reviews</div>
+            </div>
+          </div>
+          <p class="cita"
+             data-en="Exceptional place, excellent food — especially the pasta — and lower prices than lesser spots. The service is excellent too. The terrace has a beautiful view of the city."
+             data-it="Posto eccezionale, cibo eccellente — in particolare la pasta — e prezzi più bassi rispetto ad altri locali. Anche il servizio è eccellente. La terrazza ha una vista bellissima sulla città.">
+             Exceptional place, excellent food — especially the pasta — and lower prices than lesser spots. The service is excellent too. The terrace has a beautiful view of the city.</p>
+        </div>
+        <div class="tarjeta-reseña">
+          <div class="cabeza">
+            <div class="avatar">&#9733;</div>
+            <div>
+              <div class="nombre" data-en="Guest review" data-it="Recensione di un ospite">Guest review</div>
+              <div class="fuente" data-en="From Google reviews" data-it="Dalle recensioni Google">From Google reviews</div>
+            </div>
+          </div>
+          <p class="cita"
+             data-en="Excellent spot to enjoy a wonderful dinner with the open-air view; the service was magnificent. I would come back here, no doubt. 10/10."
+             data-it="Posto eccellente per una cena meravigliosa con vista all'aperto; il servizio è stato magnifico. Tornerei indiscutibilmente. 10/10.">
+             Excellent spot to enjoy a wonderful dinner with the open-air view; the service was magnificent. I would come back here, no doubt. 10/10.</p>
+        </div>
+        <div class="tarjeta-reseña">
+          <div class="cabeza">
+            <div class="avatar">&#9733;</div>
+            <div>
+              <div class="nombre" data-en="Guest from the Dominican Republic" data-it="Ospite dalla Repubblica Dominicana">Guest from the Dominican Republic</div>
+              <div class="fuente" data-en="From Google reviews" data-it="Dalle recensioni Google">From Google reviews</div>
+            </div>
+          </div>
+          <p class="cita"
+             data-en="Very good place and excellent service. I am from the Dominican Republic — this is the first restaurant I liked in the month I have been here. Keziah took great care of me."
+             data-it="Posto molto bello e servizio eccellente. Vengo dalla Repubblica Dominicana — è il primo ristorante che mi è piaciuto nel mese che sono stato qui. Keziah mi ha trattato benissimo.">
+             Very good place and excellent service. I am from the Dominican Republic — this is the first restaurant I liked in the month I have been here. Keziah took great care of me.</p>
+        </div>
+        <!-- Lo que los huéspedes elogian (datos del directorio del negocio) -->
         <div class="tarjeta-reseña">
           <div class="cabeza">
             <div class="avatar">&#127864;</div>
@@ -834,9 +910,7 @@ footer small { color: #6e6257; display: block; margin-top: 8px; }
 </section>
 
 <!-- ============ GALERÍA ============ -->
-<!-- TODO: estas fotos son de archivo (Unsplash, uso libre) SOLO para la demo.
-     Antes de publicar, reemplázalas por fotos reales del restaurante
-     con permiso del dueño. Para cambiarlas, edita cada src="..." abajo. -->
+<!-- Fotos reales del restaurante (proporcionadas por el dueño). -->
 <section id="gallery">
   <div class="revelar">
     <div class="ornamento"><span class="linea"></span><span class="rombo"></span><span class="linea"></span></div>
@@ -846,11 +920,15 @@ footer small { color: #6e6257; display: block; margin-top: 8px; }
        data-it="Uno sguardo al tavolo">
        A glimpse of the table</p>
     <div class="galeria">
-      <div class="foto"><img src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=700&q=60" alt="Fresh pasta dish" loading="lazy"></div>
-      <!-- La imagen anterior de pizza daba 404; esta fue verificada y carga bien -->
-      <div class="foto"><img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=700&q=60" alt="Wood-fired pizza" loading="lazy"></div>
-      <div class="foto"><img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=700&q=60" alt="Wine glasses" loading="lazy"></div>
-      <div class="foto"><img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=700&q=60" alt="Plated dish" loading="lazy"></div>
+      <div class="foto"><img src="img/terraza.jpg" alt="Amici terrace" loading="lazy"></div>
+      <div class="foto"><img src="img/nero-linguini.jpg" alt="Nero Linguini Pasta" loading="lazy"></div>
+      <div class="foto"><img src="img/branzino.jpg" alt="Branzino" loading="lazy"></div>
+      <div class="foto"><img src="img/lamb-loin.jpg" alt="Lamb Loin" loading="lazy"></div>
+      <div class="foto"><img src="img/gambari.jpg" alt="Gambari" loading="lazy"></div>
+      <div class="foto"><img src="img/cotoletta.jpg" alt="Cotoletta" loading="lazy"></div>
+      <div class="foto"><img src="img/iceberg-insalata.jpg" alt="Iceberg Insalata" loading="lazy"></div>
+      <div class="foto"><img src="img/polpette.jpg" alt="Amici Polpette" loading="lazy"></div>
+      <div class="foto"><img src="img/pizza.jpg" alt="Wood-fired pizza" loading="lazy"></div>
     </div>
   </div>
 </section>
@@ -941,9 +1019,9 @@ footer small { color: #6e6257; display: block; margin-top: 8px; }
   <div class="script" data-en="See you soon" data-it="A presto">See you soon</div>
   <h2 data-en="See you at the table" data-it="Ci vediamo al tavolo">See you at the table</h2>
   <p>301 Church St, Georgetown, Guyana</p>
-  <p>Phone: +592 708 9888 &nbsp;·&nbsp; Reservations recommended for dinner</p>
+  <p>Phone: +592 708 9888 &nbsp;·&nbsp; Email: reservations@amicicaribbean.com</p>
   <a class="btn" href="https://wa.me/5927089888" data-en="WhatsApp us" data-it="Scrivici su WhatsApp">WhatsApp us</a>
-  <a class="btn btn-transparente" href="#menu" data-en="See the menu" data-it="Vedi il menù">See the menu</a>
+  <a class="btn btn-transparente" href="https://www.opentable.com/r/amici-georgetown" data-en="Book on OpenTable" data-it="Prenota su OpenTable">Book on OpenTable</a>
 </section>
 
 <!-- ============ PIE DE PÁGINA ============ -->
