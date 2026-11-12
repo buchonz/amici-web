@@ -327,7 +327,11 @@ h2 {
   padding: 30px 26px;
   transition: transform .3s ease, border-color .3s ease;
 }
-.tarjeta-reseña:hover {
+/* El "lift" al pasar el mouse SOLO aplica cuando la tarjeta NO tiene
+   tilt 3D. Importante: sin :not(.tilt3d), esta regla ganaría por
+   especificidad (.tarjeta-reseña:hover = 2 clases > .tilt3d = 1 clase)
+   y pisaría el transform 3D justo cuando el mouse pasa por encima. */
+.tarjeta-reseña:not(.tilt3d):hover {
   transform: translateY(-6px);
   border-color: rgba(211,169,76,.5);
 }
@@ -874,7 +878,7 @@ footer small { color: #6e6257; display: block; margin-top: 8px; }
       <!-- Reseñas reales de huéspedes (traducidas al inglés/italiano; en
            Google están escritas en el idioma original de cada autor) -->
       <div class="tarjetas-reseñas">
-        <div class="tarjeta-reseña">
+        <div class="tarjeta-reseña tilt3d">
           <div class="cabeza">
             <div class="avatar">&#9733;</div>
             <div>
@@ -887,7 +891,7 @@ footer small { color: #6e6257; display: block; margin-top: 8px; }
              data-it="Posto eccezionale, cibo eccellente — in particolare la pasta — e prezzi più bassi rispetto ad altri locali. Anche il servizio è eccellente. La terrazza ha una vista bellissima sulla città.">
              Exceptional place, excellent food — especially the pasta — and lower prices than lesser spots. The service is excellent too. The terrace has a beautiful view of the city.</p>
         </div>
-        <div class="tarjeta-reseña">
+        <div class="tarjeta-reseña tilt3d">
           <div class="cabeza">
             <div class="avatar">&#9733;</div>
             <div>
@@ -900,7 +904,7 @@ footer small { color: #6e6257; display: block; margin-top: 8px; }
              data-it="Posto eccellente per una cena meravigliosa con vista all'aperto; il servizio è stato magnifico. Tornerei indiscutibilmente. 10/10.">
              Excellent spot to enjoy a wonderful dinner with the open-air view; the service was magnificent. I would come back here, no doubt. 10/10.</p>
         </div>
-        <div class="tarjeta-reseña">
+        <div class="tarjeta-reseña tilt3d">
           <div class="cabeza">
             <div class="avatar">&#9733;</div>
             <div>
@@ -914,7 +918,7 @@ footer small { color: #6e6257; display: block; margin-top: 8px; }
              Very good place and excellent service. I am from the Dominican Republic — this is the first restaurant I liked in the month I have been here. Keziah took great care of me.</p>
         </div>
         <!-- Lo que los huéspedes elogian (datos del directorio del negocio) -->
-        <div class="tarjeta-reseña">
+        <div class="tarjeta-reseña tilt3d">
           <div class="cabeza">
             <div class="avatar">&#127864;</div>
             <div>
@@ -923,7 +927,7 @@ footer small { color: #6e6257; display: block; margin-top: 8px; }
             </div>
           </div>
         </div>
-        <div class="tarjeta-reseña">
+        <div class="tarjeta-reseña tilt3d">
           <div class="cabeza">
             <div class="avatar">&#127854;</div>
             <div>
@@ -932,7 +936,7 @@ footer small { color: #6e6257; display: block; margin-top: 8px; }
             </div>
           </div>
         </div>
-        <div class="tarjeta-reseña">
+        <div class="tarjeta-reseña tilt3d">
           <div class="cabeza">
             <div class="avatar">&#127863;</div>
             <div>
@@ -957,15 +961,15 @@ footer small { color: #6e6257; display: block; margin-top: 8px; }
        data-it="Uno sguardo al tavolo">
        A glimpse of the table</p>
     <div class="galeria">
-      <div class="foto"><img src="img/terraza.jpg" alt="Amici terrace" loading="lazy"></div>
-      <div class="foto"><img src="img/nero-linguini.jpg" alt="Nero Linguini Pasta" loading="lazy"></div>
-      <div class="foto"><img src="img/branzino.jpg" alt="Branzino" loading="lazy"></div>
-      <div class="foto"><img src="img/lamb-loin.jpg" alt="Lamb Loin" loading="lazy"></div>
-      <div class="foto"><img src="img/gambari.jpg" alt="Gambari" loading="lazy"></div>
-      <div class="foto"><img src="img/cotoletta.jpg" alt="Cotoletta" loading="lazy"></div>
-      <div class="foto"><img src="img/iceberg-insalata.jpg" alt="Iceberg Insalata" loading="lazy"></div>
-      <div class="foto"><img src="img/polpette.jpg" alt="Amici Polpette" loading="lazy"></div>
-      <div class="foto"><img src="img/pizza.jpg" alt="Wood-fired pizza" loading="lazy"></div>
+      <div class="foto tilt3d"><img src="img/terraza.jpg" alt="Amici terrace" loading="lazy"></div>
+      <div class="foto tilt3d"><img src="img/nero-linguini.jpg" alt="Nero Linguini Pasta" loading="lazy"></div>
+      <div class="foto tilt3d"><img src="img/branzino.jpg" alt="Branzino" loading="lazy"></div>
+      <div class="foto tilt3d"><img src="img/lamb-loin.jpg" alt="Lamb Loin" loading="lazy"></div>
+      <div class="foto tilt3d"><img src="img/gambari.jpg" alt="Gambari" loading="lazy"></div>
+      <div class="foto tilt3d"><img src="img/cotoletta.jpg" alt="Cotoletta" loading="lazy"></div>
+      <div class="foto tilt3d"><img src="img/iceberg-insalata.jpg" alt="Iceberg Insalata" loading="lazy"></div>
+      <div class="foto tilt3d"><img src="img/polpette.jpg" alt="Amici Polpette" loading="lazy"></div>
+      <div class="foto tilt3d"><img src="img/pizza.jpg" alt="Wood-fired pizza" loading="lazy"></div>
     </div>
   </div>
 </section>
@@ -1254,13 +1258,20 @@ function calcularEstado() {
    a) Las tarjetas de reseñas y las fotos de la galería se inclinan
       en perspectiva siguiendo el cursor (con brillo en la galería).
    b) El título de la portada gira suavemente en 3D con el mouse. */
+/* Guardias de activación:
+   - "reducir movimiento" activo en el sistema -> sin efectos (accesibilidad).
+   - Sin mouse real (pantalla táctil) -> sin efectos. Antes se miraba el
+     ancho de la pantalla, pero eso desactivaba los efectos por error en
+     escritorios con ventana angosta o zoom alto. */
 var reduceMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-var esPantallaPequeña = window.matchMedia("(max-width: 720px)").matches;
+var hayMouse = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
-if (!reduceMovimiento && !esPantallaPequeña) {
-  /* a) Inclinación 3D de tarjetas y fotos */
-  document.querySelectorAll(".tarjeta-reseña, .galeria .foto").forEach(function (el) {
-    el.classList.add("tilt3d");
+if (!reduceMovimiento && hayMouse) {
+  /* a) Inclinación 3D de tarjetas y fotos.
+     La clase tilt3d ya está escrita en el HTML: así el selector es
+     ".tilt3d" (solo ASCII) y no depende de cómo decodifique el navegador
+     caracteres como la "ñ" de ".tarjeta-reseña". */
+  document.querySelectorAll(".tilt3d").forEach(function (el) {
     el.addEventListener("mousemove", function (e) {
       var r = el.getBoundingClientRect();
       var px = (e.clientX - r.left) / r.width;   /* 0 a 1 dentro del elemento */
@@ -1291,6 +1302,13 @@ if (!reduceMovimiento && !esPantallaPequeña) {
   document.querySelector(".hero").addEventListener("mouseleave", function () {
     tituloHero.style.transform = "";
   });
+} else {
+  /* Aviso en la consola (F12) para saber por qué no hay efectos 3D */
+  if (reduceMovimiento) {
+    console.info("Amici: efectos 3D desactivados porque tu sistema tiene 'reducir movimiento' activo.");
+  } else {
+    console.info("Amici: efectos 3D desactivados porque este dispositivo no tiene mouse.");
+  }
 }
 
 /* ---------- 7) Lightbox para la galería ---------- */
