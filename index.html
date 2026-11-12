@@ -434,31 +434,42 @@ h2 {
 }
 .nota-precio b { color: var(--dorado); }
 
-/* --- Video del dueño (Reel de Facebook) --- */
-.video-dueno {
-  margin-top: 50px;
-  text-align: center;
+/* ============ EFECTOS 3D ============ */
+/* Contextos de perspectiva: los contenedores donde hay tarjetas
+   que se inclinan en 3D con el mouse */
+.tarjetas-reseñas, .galeria { perspective: 1000px; }
+
+/* Elemento con inclinación 3D: el JavaScript ajusta --rx/--ry según
+   la posición del mouse dentro del elemento */
+.tilt3d {
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(0);
+  transition: transform .18s ease-out;
+  transform-style: preserve-3d;
+  will-change: transform;
 }
-.video-dueno h3 {
-  font-size: 1.6rem;
-  color: var(--dorado);
-  margin-bottom: 22px;
+
+/* Brillo que recorre las fotos de la galería siguiendo el mouse */
+.galeria .foto { position: relative; }
+.galeria .foto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .3s ease;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%),
+              rgba(255,236,190,.30), transparent 55%);
 }
-.video-dueno iframe {
-  max-width: 92%;
-  border-radius: var(--radio);
-  border: 1px solid var(--linea) !important;
-  box-shadow: var(--sombra);
+.galeria .foto:hover::after { opacity: 1; }
+
+/* Respeta a los usuarios con "reducir movimiento" activado en su sistema */
+@media (prefers-reduced-motion: reduce) {
+  .tilt3d { transition: none; }
+  .cinta .pista { animation: none; }
+  .indicador-abajo { animation: none; }
+  .hero > div { animation: none; }
 }
-.video-fallback {
-  display: block;
-  margin-top: 16px;
-  color: var(--crema-suave);
-  font-size: .85rem;
-  letter-spacing: 1px;
-  text-decoration: none;
-}
-.video-fallback:hover { color: var(--dorado); }
 
 /* ============ GALERÍA DE FOTOS ============ */
 .galeria {
@@ -757,25 +768,6 @@ footer small { color: #6e6257; display: block; margin-top: 8px; }
        data-it='Amici — "amici" in italiano — è esattamente ciò che proverai varcando la nostra porta su Church Street. Pasta fatta a mano, pizza dal forno, buon vino e calda ospitalità guyanese: cenare da noi è cenare con gli amici.'>
       Amici — "friends" in Italian — is exactly how you will feel when you walk through our door on Church Street. Handmade pasta, pizzas from the oven, good wine and warm Guyanese hospitality: dinner with us is dinner with friends.
     </p>
-
-    <!-- Video del dueño (Reel oficial de la página de Facebook del negocio).
-         Se usa el reproductor de inserción oficial de Facebook: gratis, sin
-         API key, y el video sigue viviendo en su página original.
-         Si Facebook quitara el video, abajo hay un enlace de respaldo. -->
-    <div class="video-dueno">
-      <h3 data-en="Meet the owner" data-it="Il proprietario ti racconta">Meet the owner</h3>
-      <iframe
-        src="https://www.facebook.com/plugins/video.php?height=600&amp;href=https%3A%2F%2Fwww.facebook.com%2Freel%2F958704607311125&amp;show_text=false"
-        width="340" height="600"
-        style="border:none;overflow:hidden"
-        scrolling="no" frameborder="0" allowfullscreen="true"
-        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-        title="Video del dueño de Amici">
-      </iframe>
-      <a class="video-fallback" href="https://www.facebook.com/reel/958704607311125" target="_blank" rel="noopener"
-         data-en="Watch the video on Facebook" data-it="Guarda il video su Facebook">
-         Watch the video on Facebook</a>
-    </div>
   </div>
 </section>
 
@@ -1257,7 +1249,51 @@ function calcularEstado() {
   });
 }
 
-/* ---------- 5) Lightbox para la galería ---------- */
+/* ---------- 6) Efectos 3D con el mouse ----------
+   Solo en escritorio y si el usuario no pidió "reducir movimiento".
+   a) Las tarjetas de reseñas y las fotos de la galería se inclinan
+      en perspectiva siguiendo el cursor (con brillo en la galería).
+   b) El título de la portada gira suavemente en 3D con el mouse. */
+var reduceMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+var esPantallaPequeña = window.matchMedia("(max-width: 720px)").matches;
+
+if (!reduceMovimiento && !esPantallaPequeña) {
+  /* a) Inclinación 3D de tarjetas y fotos */
+  document.querySelectorAll(".tarjeta-reseña, .galeria .foto").forEach(function (el) {
+    el.classList.add("tilt3d");
+    el.addEventListener("mousemove", function (e) {
+      var r = el.getBoundingClientRect();
+      var px = (e.clientX - r.left) / r.width;   /* 0 a 1 dentro del elemento */
+      var py = (e.clientY - r.top) / r.height;
+      el.style.setProperty("--ry", ((px - .5) * 14).toFixed(2) + "deg");
+      el.style.setProperty("--rx", ((.5 - py) * 14).toFixed(2) + "deg");
+      /* Brillo de la galería: posición del brillo = posición del cursor */
+      el.style.setProperty("--mx", (px * 100).toFixed(1) + "%");
+      el.style.setProperty("--my", (py * 100).toFixed(1) + "%");
+    });
+    el.addEventListener("mouseleave", function () {
+      el.style.setProperty("--rx", "0deg");
+      el.style.setProperty("--ry", "0deg");
+    });
+  });
+
+  /* b) Parallax 3D de la portada con el mouse.
+     Se aplica al título (h1), no al contenedor, porque el contenedor
+     tiene la animación de entrada y la tiene prioridad sobre el estilo. */
+  var tituloHero = document.querySelector(".hero h1");
+  document.querySelector(".hero").addEventListener("mousemove", function (e) {
+    var px = e.clientX / window.innerWidth - .5;   /* -0.5 a 0.5 */
+    var py = e.clientY / window.innerHeight - .5;
+    tituloHero.style.transform =
+      "perspective(800px) rotateY(" + (px * 8).toFixed(2) + "deg) " +
+      "rotateX(" + (-py * 5).toFixed(2) + "deg)";
+  });
+  document.querySelector(".hero").addEventListener("mouseleave", function () {
+    tituloHero.style.transform = "";
+  });
+}
+
+/* ---------- 7) Lightbox para la galería ---------- */
 var lightbox = document.getElementById("lightbox");
 var lbImagen = document.getElementById("lb-imagen");
 
