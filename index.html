@@ -434,6 +434,32 @@ h2 {
 }
 .nota-precio b { color: var(--dorado); }
 
+/* --- Video del dueño (Reel de Facebook) --- */
+.video-dueno {
+  margin-top: 50px;
+  text-align: center;
+}
+.video-dueno h3 {
+  font-size: 1.6rem;
+  color: var(--dorado);
+  margin-bottom: 22px;
+}
+.video-dueno iframe {
+  max-width: 92%;
+  border-radius: var(--radio);
+  border: 1px solid var(--linea) !important;
+  box-shadow: var(--sombra);
+}
+.video-fallback {
+  display: block;
+  margin-top: 16px;
+  color: var(--crema-suave);
+  font-size: .85rem;
+  letter-spacing: 1px;
+  text-decoration: none;
+}
+.video-fallback:hover { color: var(--dorado); }
+
 /* ============ GALERÍA DE FOTOS ============ */
 .galeria {
   display: grid;
@@ -731,6 +757,25 @@ footer small { color: #6e6257; display: block; margin-top: 8px; }
        data-it='Amici — "amici" in italiano — è esattamente ciò che proverai varcando la nostra porta su Church Street. Pasta fatta a mano, pizza dal forno, buon vino e calda ospitalità guyanese: cenare da noi è cenare con gli amici.'>
       Amici — "friends" in Italian — is exactly how you will feel when you walk through our door on Church Street. Handmade pasta, pizzas from the oven, good wine and warm Guyanese hospitality: dinner with us is dinner with friends.
     </p>
+
+    <!-- Video del dueño (Reel oficial de la página de Facebook del negocio).
+         Se usa el reproductor de inserción oficial de Facebook: gratis, sin
+         API key, y el video sigue viviendo en su página original.
+         Si Facebook quitara el video, abajo hay un enlace de respaldo. -->
+    <div class="video-dueno">
+      <h3 data-en="Meet the owner" data-it="Il proprietario ti racconta">Meet the owner</h3>
+      <iframe
+        src="https://www.facebook.com/plugins/video.php?height=600&amp;href=https%3A%2F%2Fwww.facebook.com%2Freel%2F958704607311125&amp;show_text=false"
+        width="340" height="600"
+        style="border:none;overflow:hidden"
+        scrolling="no" frameborder="0" allowfullscreen="true"
+        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+        title="Video del dueño de Amici">
+      </iframe>
+      <a class="video-fallback" href="https://www.facebook.com/reel/958704607311125" target="_blank" rel="noopener"
+         data-en="Watch the video on Facebook" data-it="Guarda il video su Facebook">
+         Watch the video on Facebook</a>
+    </div>
   </div>
 </section>
 
