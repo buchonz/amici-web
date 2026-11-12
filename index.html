@@ -891,7 +891,7 @@ footer small { color: #6e6257; display: block; margin-top: 8px; }
 </section>
 
 <!-- ============ HORARIOS ============ -->
-<!-- TODO: poner los horarios reales. OJO: el JavaScript lee esta tabla
+<!-- Horario real del negocio. OJO: el JavaScript lee esta tabla
      (atributos data-dias) para calcular "Open now / Closed" y resaltar hoy. -->
 <section id="hours">
   <div class="revelar">
@@ -904,17 +904,12 @@ footer small { color: #6e6257; display: block; margin-top: 8px; }
     <div class="estado" id="badge-estado"><span><i class="punto"></i><em id="texto-estado">Checking…</em></span></div>
     <div class="horarios">
       <table id="tabla-horarios">
-        <tr data-dias="1,2,3,4,5">
-          <td data-en="Monday – Friday" data-it="Lunedì – Venerdì">Monday – Friday</td>
-          <td>11:00 – 22:00</td>
-        </tr>
-        <tr data-dias="6">
-          <td data-en="Saturday" data-it="Sabato">Saturday</td>
-          <td>11:00 – 23:00</td>
-        </tr>
-        <tr data-dias="0">
-          <td data-en="Sunday" data-it="Domenica">Sunday</td>
-          <td class="estado-cerrado" data-en="Closed" data-it="Chiuso">Closed</td>
+        <!-- Horario real (fuente: ficha del negocio): todos los días 16:00–00:00.
+             Se escribe en formato 24h para que el JavaScript pueda calcular
+             el estado "Open now / Closed". "Jueves a miércoles" = toda la semana. -->
+        <tr data-dias="0,1,2,3,4,5,6">
+          <td data-en="Thursday – Wednesday (daily)" data-it="Giovedì – Mercoledì (tutti i giorni)">Thursday – Wednesday (daily)</td>
+          <td>16:00 – 00:00</td>
         </tr>
       </table>
     </div>
@@ -958,9 +953,9 @@ footer small { color: #6e6257; display: block; margin-top: 8px; }
     <!-- TODO: poner los enlaces reales de redes sociales si existen -->
     <a href="#">Instagram</a><a href="#">Facebook</a><a href="#">WhatsApp</a>
   </div>
-  <small data-en="301 Church St, Georgetown, Guyana · Open Mon–Sat"
-         data-it="301 Church St, Georgetown, Guyana · Aperto lun–sab">
-         301 Church St, Georgetown, Guyana · Open Mon–Sat</small>
+  <small data-en="301 Church St, Georgetown, Guyana · Open daily 4 PM – 12 AM"
+         data-it="301 Church St, Georgetown, Guyana · Aperto tutti i giorni 16 – 24">
+         301 Church St, Georgetown, Guyana · Open daily 4 PM – 12 AM</small>
 </footer>
 
 <!-- Botón flotante para volver arriba -->
@@ -1117,6 +1112,10 @@ function calcularEstado() {
       if (partes) {
         var abre = parseInt(partes[1], 10) + parseInt(partes[2], 10) / 60;
         var cierra = parseInt(partes[3], 10) + parseInt(partes[4], 10) / 60;
+        /* Caso especial: cierre a medianoche. "00:00" vale 0, pero como
+           hora de cierre significa el final del día, se trata como 24:00.
+           Sin esto, un local que cierra a las 12 am parecería cerrado. */
+        if (cierra === 0) cierra = 24;
         if (horas >= abre && horas < cierra) abierto = true;
       }
     }
